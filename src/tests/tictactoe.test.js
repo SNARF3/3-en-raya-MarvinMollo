@@ -1,45 +1,88 @@
-// src/game/tictactoe.js
+// src/tests/tictactoe.test.js
+import { describe, it, expect } from 'vitest';
+import {
+  createBoard,
+  placePiece,
+  getNextPlayer,
+  checkWinner,
+  PLAYERS,
+} from '../game/tictactoe';
 
-export const PLAYERS = { X: 'X', O: '+' };
-export const BOARD_SIZE = 3;
+describe('R1 [MANUAL] - Colocación de piezas', () => {
+  it('lanza excepción cuando la posición ya está ocupada', () => {
+    console.log('\n╔══════════════════════════════════════════════╗');
+    console.log('║  R1 MANUAL — Posición ya ocupada             ║');
+    console.log('╚══════════════════════════════════════════════╝');
 
-export function createBoard() {
-  return Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(null));
-}
+    const board = createBoard();
+    const board2 = placePiece(board, 1, 1, PLAYERS.X);
 
-export function placePiece(board, row, col, player) {
-  if (row < 0 || row >= BOARD_SIZE) {
-    throw new Error('Posición fuera del eje X');
-  }
-  if (col < 0 || col >= BOARD_SIZE) {
-    throw new Error('Posición fuera del eje Y');
-  }
-  if (board[row][col] !== null) {
-    throw new Error('Posición ya ocupada');
-  }
-  const newBoard = board.map(r => [...r]);
-  newBoard[row][col] = player;
-  return newBoard;
-}
+    console.log('\n  board2[1][1] =', board2[1][1]);
+    console.log('  ➜ Intentando colocar "+" en (1,1) — celda ya ocupada...');
 
-export function getNextPlayer(history) {
-  if (history.length === 0) return PLAYERS.X;
-  const last = history[history.length - 1];
-  return last === PLAYERS.X ? PLAYERS.O : PLAYERS.X;
-}
+    let errorCapturado = '';
+    try {
+      placePiece(board2, 1, 1, PLAYERS.O);
+    } catch (e) {
+      errorCapturado = e.message;
+      console.log('  ✅ Excepción capturada:', `"${e.message}"`);
+    }
 
-export function checkWinner(board) {
-  for (let r = 0; r < BOARD_SIZE; r++) {
-    if (board[r][0] && board[r].every(cell => cell === board[r][0])) return board[r][0];
-  }
-  for (let c = 0; c < BOARD_SIZE; c++) {
-    if (board[0][c] && board.every(row => row[c] === board[0][c])) return board[0][c];
-  }
-  if (board[0][0] && board[0][0] === board[1][1] && board[1][1] === board[2][2]) return board[0][0];
-  if (board[0][2] && board[0][2] === board[1][1] && board[1][1] === board[2][0]) return board[0][2];
-  return null;
-}
+    console.log('\n  Esperado : mensaje contiene "ya ocupada"');
+    console.log('  Obtenido :', `"${errorCapturado}"`);
+    console.log('  ¿Pasa?   :', errorCapturado.includes('ya ocupada') ? '✅ PASS' : '❌ FAIL');
+    console.log('─────────────────────────────────────────────\n');
 
-export function isDraw(board) {
-  return board.every(row => row.every(cell => cell !== null)) && !checkWinner(board);
-}
+    expect(errorCapturado).toContain('ya ocupada');
+  });
+});
+
+describe('R2 [MANUAL] - Turnos', () => {
+  it('el primer turno siempre es para X', () => {
+    console.log('\n╔══════════════════════════════════════════════╗');
+    console.log('║  R2 MANUAL — Primer turno es X               ║');
+    console.log('╚══════════════════════════════════════════════╝');
+
+    const historial = [];
+    console.log('\n  Historial:', historial, '(vacío — partida nueva)');
+    console.log('  ➜ Llamando getNextPlayer([])...');
+
+    const siguiente = getNextPlayer(historial);
+
+    console.log('\n  Esperado : "X"');
+    console.log('  Obtenido :', `"${siguiente}"`);
+    console.log('  ¿Pasa?   :', siguiente === PLAYERS.X ? '✅ PASS' : '❌ FAIL');
+    console.log('─────────────────────────────────────────────\n');
+
+    expect(siguiente).toBe(PLAYERS.X);
+  });
+});
+
+describe('R3 [MANUAL] - Condición de victoria', () => {
+  it('X gana con una línea horizontal completa (fila 0)', () => {
+    console.log('\n╔══════════════════════════════════════════════╗');
+    console.log('║  R3 MANUAL — Victoria horizontal fila 0      ║');
+    console.log('╚══════════════════════════════════════════════╝');
+
+    const board = [
+      ['X', 'X', 'X'],
+      [null, '+', null],
+      [null, null, null],
+    ];
+
+    console.log('\n  Tablero evaluado:');
+    board.forEach((fila, i) => {
+      console.log(`    Fila ${i}: [ ${fila.map(c => c ?? '·').join(' , ')} ]`);
+    });
+
+    console.log('\n  ➜ Llamando checkWinner(board)...');
+    const ganador = checkWinner(board);
+
+    console.log('\n  Esperado : "X"');
+    console.log('  Obtenido :', `"${ganador}"`);
+    console.log('  ¿Pasa?   :', ganador === 'X' ? '✅ PASS' : '❌ FAIL');
+    console.log('─────────────────────────────────────────────\n');
+
+    expect(ganador).toBe('X');
+  });
+});
