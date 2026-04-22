@@ -1,5 +1,4 @@
-// src/tests/tictactoe.ai.test.js
-// Pruebas generadas con IA (prompt al final del archivo)
+
 import { describe, it, expect } from 'vitest';
 import {
   createBoard,
@@ -101,20 +100,3 @@ describe('R3 [IA] - Condición de victoria', () => {
   });
 
 });
-
-/*
-  PROMPT USADO CON IA (ChatGPT / Claude):
-
-  "Genera pruebas unitarias con Vitest para una kata de Tres en Raya en JavaScript.
-   Las funciones disponibles son:
-   - createBoard(): crea tablero 3x3 vacío
-   - placePiece(board, row, col, player): coloca pieza, lanza Error si fuera de rango o celda ocupada
-   - getNextPlayer(history): retorna el siguiente jugador. Primer turno siempre X, luego alterna X/+
-   - checkWinner(board): retorna jugador ganador o null
-   Los jugadores son 'X' y '+'.
-   Quiero UNA prueba por requerimiento que cubra casos técnicos que un humano podría omitir:
-   - R1: verificar que placePiece no muta el tablero original (inmutabilidad)
-   - R2: verificar alternancia en una secuencia larga de 4 turnos
-   - R3: verificar victoria vertical usando un loop que pruebe las 3 columnas
-   Agrega console.log detallados en cada prueba mostrando los valores antes y después."
-*/

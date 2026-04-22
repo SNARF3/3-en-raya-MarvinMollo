@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import { useState } from 'react';
 import GameBoard from './components/GameBoard';
 import TestResults from './components/testResults';

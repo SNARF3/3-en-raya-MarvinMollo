@@ -1,4 +1,3 @@
-// src/components/GameBoard.jsx
 import { useState } from 'react';
 import Board from './Board';
 import GameStatus from './GameStatus';

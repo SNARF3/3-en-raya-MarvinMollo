@@ -1,4 +1,3 @@
-// src/game/tictactoe.js
 
 export const PLAYERS = { X: 'X', O: '+' };
 export const BOARD_SIZE = 3;

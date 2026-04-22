@@ -1,4 +1,3 @@
-// src/components/TestResults.jsx
 import { useState } from 'react';
 import {
     createBoard,

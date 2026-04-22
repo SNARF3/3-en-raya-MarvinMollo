@@ -1,4 +1,3 @@
-// src/components/Board.jsx
 import Square from './Square';
 
 export default function Board({ board, onSquareClick, winningCells }) {

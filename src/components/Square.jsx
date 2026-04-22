@@ -1,4 +1,3 @@
-// src/components/Square.jsx
 export default function Square({ value, onClick, isWinning }) {
   return (
     <button

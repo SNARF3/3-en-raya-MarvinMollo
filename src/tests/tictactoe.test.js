@@ -1,4 +1,3 @@
-// src/tests/tictactoe.test.js
 import { describe, it, expect } from 'vitest';
 import {
   createBoard,

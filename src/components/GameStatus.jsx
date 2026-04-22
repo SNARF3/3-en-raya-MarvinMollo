@@ -1,4 +1,3 @@
-// src/components/GameStatus.jsx
 export default function GameStatus({ winner, isDraw, currentPlayer }) {
   if (winner) return (
     <div className="status status-win">
